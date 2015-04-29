@@ -13,7 +13,7 @@
 $root=(!isset($root))?"../../../":$root;
 require_once($root."modulos/usuarios/librerias/Configuracion.cnf.php");
 
-class Jerarquias {
+class Usuarios_Jerarquias {
 
   function asignar($usuario,$roles,$creador) {
     $this->eliminar($usuario);

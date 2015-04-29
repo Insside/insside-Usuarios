@@ -17,12 +17,11 @@ class Usuarios {
   function Usuarios() {
     $this->sesion = new Sesion();
     $this->fechas = new Fechas();
-    $this->permisos = new Permisos();
-    $this->politicas = new Politicas();
+    $this->permisos = new Usuarios_Permisos();
+    $this->politicas = new Usuarios_Politicas();
     $this->formularios = new Formularios(time());
-
-    $modulos = new Modulos();
-    $this->jerarquias = new Jerarquias();
+    $modulos = new Usuarios_Modulos();
+    $this->jerarquias = new Usuarios_Jerarquias();
     $modulo = $modulos->crear("002", "Usuarios", "Modulo Control de Usuarios.", "");
     $this->permisos->permiso_crear($modulo, "USUARIOS-MODULO-A", "Acceso Modulo De Usuarios", "Permite acceder al modulo Usuarios.", "0000000000");
     $this->permisos->permiso_crear($modulo, "USUARIOS-USUARIOS-R", "Visualizar Usuarios", "Permite visualizar los usuarios del sistema.", "0000000000");
@@ -59,10 +58,25 @@ class Usuarios {
     return($consulta);
   }
 
-  function consultar($usuario) {
-    $usuario=  is_array($usuario)?$usuario['usuario']:$usuario;
+  /**
+   * Este metodo retorna el id de un usuario a partir de su alias, el dato retornado es la id numerica
+   * del usuario registrado en la base de datos.
+   * @param type $alias
+   * @return type
+   */
+  function alias($alias) {
     $db = new MySQL();
-    $sql="SELECT * FROM `usuarios_usuarios` WHERE(`usuario` = '" . $usuario ."');";
+    $sql = "SELECT * FROM `usuarios_usuarios` WHERE(`alias` = '" . $alias . "');";
+    $consulta = $db->sql_query($sql);
+    $fila = $db->sql_fetchrow($consulta);
+    $db->sql_close();
+    return($fila['usuario']);
+  }
+
+  function consultar($usuario) {
+    $usuario = is_array($usuario) ? $usuario['usuario'] : $usuario;
+    $db = new MySQL();
+    $sql = "SELECT * FROM `usuarios_usuarios` WHERE(`usuario` = '" . $usuario . "');";
     $consulta = $db->sql_query($sql);
     $fila = $db->sql_fetchrow($consulta);
     $db->sql_close();
@@ -82,7 +96,8 @@ class Usuarios {
       $alias = strtoupper($alias);
       $clave = strtoupper($clave);
       $db = new MySQL();
-      $consulta = $db->sql_query("SELECT * FROM `usuarios_usuarios` WHERE `alias` = '" . $alias . "'");
+      $sql = "SELECT * FROM `usuarios_usuarios` WHERE(`alias` = '" . $alias . "');";
+      $consulta = $db->sql_query($sql);
       $fila = $db->sql_fetchrow($consulta);
       $db->sql_close();
       if ($clave == $fila["clave"]) {
@@ -176,14 +191,10 @@ class Usuarios {
     }
   }
 
-  function permiso($permiso, $usuario = "") {
-    if (empty($usuario)) {
-      $usuario = $this->sesion->usuario(); //echo($usuario);
-    }
-    $roles = $this->jerarquias->consultar($usuario['usuario']); //print_r($roles);
+  function permiso($permiso, $usuario) {
+    $roles = $this->jerarquias->consultar($usuario);
     foreach ($roles as $rol) {
       $asignado = $this->politicas->consultar($rol['rol'], $permiso);
-      //print_r($asignado);
       if (!empty($asignado['permiso'])) {
         return(true);
       }
@@ -201,8 +212,8 @@ class Usuarios {
     $db->sql_close();
     return($fila);
   }
-  
-    /**
+
+  /**
    *  Retorna un elemento html tipo select que contiene los posibles criterios a usar en el componente de 
    * busqueda
    * 
@@ -215,30 +226,28 @@ class Usuarios {
     $valores = array("usuario", "alias");
     return($this->formularios->combo($nombre, $etiquetas, $valores, $seleccionado, ""));
   }
-  
-  
-  function nombre($usuario){
-    $cadenas=new Cadenas();
-    $usuario=$this->consultar($usuario);
+
+  function nombre($usuario) {
+    $cadenas = new Cadenas();
+    $usuario = $this->consultar($usuario);
     $db = new MySQL();
     $sql = "SELECT * FROM `usuarios_perfiles` WHERE `perfil` = '" . $usuario['perfil'] . "'";
     $consulta = $db->sql_query($sql);
     $fila = $db->sql_fetchrow($consulta);
     $db->sql_close();
-    return($cadenas->capitalizar($fila['nombres']." ".$fila["apellidos"]));
+    return($cadenas->capitalizar($fila['nombres'] . " " . $fila["apellidos"]));
   }
 
-  
-    function perfil($perfil){
-    $cadenas=new Cadenas();
+  function perfil($perfil) {
+    $cadenas = new Cadenas();
     $db = new MySQL();
-    $sql = "SELECT * FROM `usuarios_perfiles` WHERE `perfil` = '" . $perfil. "'";
+    $sql = "SELECT * FROM `usuarios_perfiles` WHERE `perfil` = '" . $perfil . "'";
     $consulta = $db->sql_query($sql);
     $fila = $db->sql_fetchrow($consulta);
     $db->sql_close();
     return($fila);
   }
-  
+
 }
 
 ?>

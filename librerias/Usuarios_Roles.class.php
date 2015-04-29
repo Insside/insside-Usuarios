@@ -3,13 +3,13 @@
 $root = (!isset($root)) ? "../../../" : $root;
 require_once($root . "librerias/Fechas.class.php");
 
-class Roles {
+class Usuarios_Roles {
 
   var $tabla = "roles", $indice = "rol", $sesion, $fechas;
 
-  function Roles() {
+  function Usuarios_Roles() {
     $this->inicializar();
-    $permisos = new Permisos();
+    $permisos = new Usuarios_Permisos();
     $this->sesion = new Sesion();
     $this->fechas = new Fechas();
     $permisos->crear("USUARIOS-ROLES", "Permite acceder al componente roles del modulo usuarios", "SISTEMA");

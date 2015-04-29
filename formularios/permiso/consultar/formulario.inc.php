@@ -1,5 +1,5 @@
 <?php
-$permisos=new Permisos();
+$permisos=new Usuarios_Permisos();
 $roles=new Roles();
 /* 
  * Copyright (c) 2014, Alexis

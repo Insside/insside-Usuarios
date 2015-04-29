@@ -3,7 +3,7 @@
 $root = (!isset($root)) ? "../../../" : $root;
 require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
 
-class Politicas {
+class Usuarios_Politicas {
 
   function crear($rol, $permiso, $creador) {
     $db = new MySQL();

@@ -3,9 +3,9 @@
 $root = (!isset($root)) ? "../../../" : $root;
 require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
 
-class Permisos {
+class Usuarios_Permisos {
 
-  function Permisos() {
+  function Usuarios_Permisos() {
 
   }
 
