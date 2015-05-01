@@ -35,7 +35,7 @@ $sesion=new Sesion();
 $validaciones=new Validaciones();
 $roles=new Roles();
 /** Variables **/
-$usuario=$sesion->usuario();
+$usuario=Sesion::usuario();
 $tr=$roles->conteo();
 ?>
 

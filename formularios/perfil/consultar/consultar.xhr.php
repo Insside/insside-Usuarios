@@ -1,7 +1,7 @@
 <?php
 $root = (!isset($root)) ? "../../../../../" : $root;
 require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
-$validaciones=new Validaciones();
+Sesion::init();
 /* 
  * Copyright (c) 2014, Alexis
  * All rights reserved.

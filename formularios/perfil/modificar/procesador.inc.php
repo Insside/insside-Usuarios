@@ -28,7 +28,7 @@ $validaciones=new Validaciones();
  * POSSIBILITY OF SUCH DAMAGE.
  */
 //print_r($_REQUEST);
-$usuario=$sesion->usuario();
+$usuario=Sesion::usuario();
 $up->actualizar($usuario['perfil'],'direccion', $validaciones->recibir("direccion"));
 $up->actualizar($usuario['perfil'],'telefonos', $validaciones->recibir("telefonos"));
 $up->actualizar($usuario['perfil'],'correo', $validaciones->recibir("correo"));

@@ -28,7 +28,7 @@ $equipos=new Usuarios_Equipos();
  * POSSIBILITY OF SUCH DAMAGE.
  */
 $transaccion = $validaciones->recibir("transaccion");
-$usuario = $sesion->usuario(); 
+$usuario = Sesion::usuario(); 
 $perfil = $usuarios->perfil($usuario['perfil']);
 $equipo=$equipos->consultar($usuario['equipo']);
 

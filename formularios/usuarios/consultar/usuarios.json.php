@@ -36,7 +36,7 @@ $empleados = new Usuarios_Empleados();
  */
 
 
-$usuario = $sesion->usuario();
+$usuario = Sesion::usuario();
 
 /** Variables Recibidas * */
 $v['criterio'] = $validaciones->recibir("criterio");

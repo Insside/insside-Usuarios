@@ -40,7 +40,7 @@ $notificaciones = new Notificaciones();
  */
 
 
-$usuario = $sesion->usuario();
+$usuario = Sesion::usuario();
 
 /** Variables Recibidas * */
 $v['criterio'] = $validaciones->recibir("criterio");

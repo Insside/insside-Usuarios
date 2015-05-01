@@ -34,7 +34,7 @@ $equipos=new Usuarios_Equiposs();
  */
 
 /** Valores **/
-$usuario=$sesion->usuario();
+$usuario=Sesion::usuario();
 $valores['usuario']=time();
 $valores['empleado']=$validaciones->recibir("_empleado");
 $valores['alias']=$validaciones->recibir("_alias");
