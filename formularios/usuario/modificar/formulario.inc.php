@@ -4,7 +4,7 @@ $sesion=new Sesion();
 $cadenas = new Cadenas();
 $fechas = new Fechas();
 $validaciones = new Validaciones();
-$empleados=new Empleados();
+$empleados=new Usuarios_Perfiles();
 $equipos=new Usuarios_Equiposs();
 $usuarios=new Usuarios();
 
