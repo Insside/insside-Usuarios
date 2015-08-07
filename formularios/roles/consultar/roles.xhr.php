@@ -1,7 +1,6 @@
 <?php
 $root = (!isset($root)) ? "../../../../../" : $root;
-require_once($root . "modulos/solicitudes/librerias/Configuracion.cnf.php");
-$sesion=new Sesion();
+require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
 $validaciones=new Validaciones();
 /*
  * Copyright (c) 2013, Alexis

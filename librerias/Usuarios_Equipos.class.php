@@ -34,7 +34,6 @@
 class Usuarios_Equipos {
 
   function combo($name, $selected) {
-    $modulos = new Modulos();
     $db = new MySQL();
     $sql = "SELECT * FROM `usuarios_equipos` ORDER BY `nombre` ASC";
     $consulta = $db->sql_query($sql);
@@ -47,6 +46,31 @@ class Usuarios_Equipos {
     $html.=("</select>");
     return($html);
   }
+  
+  
+   function combo_electoral($name, $selected) {
+     $cadenas=new Cadenas();
+    $db = new MySQL();
+    $sql = "SELECT * "
+            . "FROM `preelectoral_candidatos` "
+            . "WHERE `departamento` = 'VALLE' AND `municipio` = 'BUGA' "
+            . "ORDER BY `nombre_1`,`nombre_2`,`apellido_1`,`apellido_2`";
+    $consulta = $db->sql_query($sql);
+    $html = ('<select name="' . $name . '"id="' . $name . '">');
+    $conteo = 0;
+    while ($fila = $db->sql_fetchrow($consulta)) {
+      $fila['nombre']=$cadenas->capitalizar($fila['nombre_1']." ".$fila['nombre_2']." ".$fila['apellido_1']." ".$fila['apellido_2']." - ".$fila['candidato']);
+      $html.=('<option value="' . $fila['candidato'] . '"' . (($selected == $fila['equipo']) ? "selected" : "") . '>' . $fila['nombre'] . '</option>');
+      $conteo++;
+    } $db->sql_close();
+    $html.=("</select>");
+    return($html);
+  }
+  
+  
+  
+  
+  
   
     function consultar($equipo) {
     $db = new MySQL();

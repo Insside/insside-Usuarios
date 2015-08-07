@@ -4,23 +4,20 @@ $sesion=new Sesion();
 $cadenas = new Cadenas();
 $fechas = new Fechas();
 $validaciones = new Validaciones();
-$empleados=new Empleados();
-$equipos=new Usuarios_Equiposs();
+$empleados=new Usuarios_Perfiles();
+$equipos=new Usuarios_Equipos();
 $usuarios=new Usuarios();
-
-/* 
- * Copyright (c) 2014, Alexis
+/************************************************************************
+ * Copyright (c) 2015, Alexis
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *
  * * Redistributions of source code must retain the above copyright notice, this
  *   list of conditions and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -32,8 +29,7 @@ $usuarios=new Usuarios();
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- */
-
+ ***********************************************************************/
 /** Valores **/
 $usuario=$usuarios->consultar($validaciones->recibir("usuario"));
 $valores=$usuario;
@@ -44,7 +40,7 @@ $f->campos['usuario']=$f->text("usuario",$valores['usuario'], "15","required cod
 $f->campos['empleado']=$empleados->combo("empleado",$valores['empleado']);
 $f->campos['alias']=$f->text("alias",$valores['alias'], "64","required", false);
 $f->campos['clave']=$f->clave("clave",$valores['clave'], "64","required", false);
-$f->campos['equipo']=$equipos->combo("equipo",$valores['equipo']);
+$f->campos['equipo']=$equipos->combo_electoral("equipo",$valores['equipo']);
 $f->campos['fecha']=$f->text("fecha",$valores['fecha'], "10","required automatico", true);
 $f->campos['hora']=$f->text("hora",$valores['hora'], "8","required automatico", true);
 $f->campos['creador']=$f->text("creador",$valores['creador'], "10","required automatico", true);

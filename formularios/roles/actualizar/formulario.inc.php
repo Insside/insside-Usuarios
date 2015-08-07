@@ -1,7 +1,7 @@
 <?php
 $sesion = new Sesion();
 $usuarios = new Usuarios();
-$jerarquias = new Jerarquias();
+$jerarquias = new Usuarios_Jerarquias();
 /*
  * Copyright (c) 2013, Alexis
  * All rights reserved.

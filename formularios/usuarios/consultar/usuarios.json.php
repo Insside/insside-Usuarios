@@ -8,7 +8,7 @@ $validaciones = new Validaciones();
 $cadenas = new Cadenas();
 $fechas = new Fechas();
 $usuarios = new Usuarios();
-$empleados = new Usuarios_Empleados();
+$perfiles = new Usuarios_Perfiles();
 /*
  * Copyright (c) 2013, Alexis
  * All rights reserved.
@@ -95,8 +95,8 @@ $sql = "SELECT * FROM `usuarios_usuarios` " . $buscar . " ORDER BY `alias` DESC 
 $consulta = $db->sql_query($sql);
 $ret = array();
 while ($fila = $db->sql_fetchrow($consulta)) {
-  $empleado=$empleados->consultar($fila['empleado']);
-  $fila['nombre']=$cadenas->capitalizar($empleado['nombres']." ".$empleado['apellidos']);
+  $perfil=$perfiles->consultar($fila['perfil']);
+  $fila['nombre']=$cadenas->capitalizar($perfil['nombres']." ".$perfil['apellidos']);
   array_push($ret, $fila);
 }
 

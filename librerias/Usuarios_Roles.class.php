@@ -33,7 +33,7 @@ class Usuarios_Roles {
     $sql = "DELETE FROM `aplicacion_roles` WHERE `rol`='" . $rol . "';";
     $consulta = $db->sql_query($sql);
     $db->sql_close();
-    $politicas = new Politicas();
+    $politicas = new Usuarios_Politicas();
     $politicas->eliminar($rol);
   }
 

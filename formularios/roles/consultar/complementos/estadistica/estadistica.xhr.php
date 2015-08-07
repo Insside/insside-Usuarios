@@ -33,7 +33,7 @@ require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
 /** Clases **/
 $sesion=new Sesion();
 $validaciones=new Validaciones();
-$roles=new Roles();
+$roles=new Usuarios_Roles();
 /** Variables **/
 $usuario=Sesion::usuario();
 $tr=$roles->conteo();

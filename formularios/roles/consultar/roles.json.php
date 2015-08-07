@@ -1,18 +1,12 @@
 <?php
 $root = (!isset($root)) ? "../../../../../" : $root;
-require_once($root . "modulos/solicitudes/librerias/Configuracion.cnf.php");
+require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
 header('Content-Type: application/json');
-
-$sesion = new Sesion();
 $automatizaciones = new Automatizaciones();
 $usuarios = new Usuarios();
 $validaciones = new Validaciones();
-$suscriptores = new Suscriptores();
 $cadenas = new Cadenas();
 $fechas = new Fechas();
-$solicitudes = new Solicitudes();
-$respuestas = new Respuestas();
-$notificaciones = new Notificaciones();
 /*
  * Copyright (c) 2013, Alexis
  * All rights reserved.

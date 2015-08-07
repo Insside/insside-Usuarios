@@ -1,7 +1,7 @@
 <?php
 $empleados = new Empleados();
 $usuarios = new Usuarios();
-$equipos=new Usuarios_Equiposs();
+$equipos=new Usuarios_Equipos();
 /** Variables Recibidas **/
 $transaccion=$validaciones->recibir("transaccion");
 $usuario=$usuarios->consultar($validaciones->recibir("usuario"));

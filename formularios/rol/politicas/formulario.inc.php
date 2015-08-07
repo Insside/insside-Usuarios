@@ -2,9 +2,9 @@
 $sesion = new Sesion();
 $cadenas=new Cadenas();
 $usuarios = new Usuarios();
-$roles=new Roles();
-$politicas = new Politicas();
-$jerarquias = new Jerarquias();
+$roles=new Usuarios_Roles();
+$politicas = new Usuarios_Politicas();
+$jerarquias = new Usuarios_Jerarquias();
 /*
  * Copyright (c) 2013, Alexis
  * All rights reserved.

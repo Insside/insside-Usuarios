@@ -2,7 +2,7 @@
 $root = (!isset($root)) ? "../../../../../" : $root;
 require_once($root . "modulos/proveedores/librerias/Configuracion.cnf.php");
 $validaciones=new Validaciones();
-$roles=new Roles();
+$roles=new Usuarios_Roles();
 /*
  * Copyright (c) 2014, Alexis
  * All rights reserved.

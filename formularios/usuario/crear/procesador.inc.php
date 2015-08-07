@@ -1,9 +1,7 @@
 <?php
-
 $cadenas = new Cadenas();
 $fechas = new Fechas();
 $usuarios=new Usuarios();
-
 /* 
  * Copyright (c) 2014, Alexis
  * All rights reserved.
@@ -42,5 +40,6 @@ $datos["creador"]=$validaciones->recibir("creador");
 $usuarios->crear($datos);
 /** JavaScripts **/
 $f->JavaScript("if(itable_usuarios){itable_usuarios.refresh();}");
-$f->JavaScript("MUI.closeWindow($('" . ($f->ventana) . "'));");
+$f->JavaScript("MUI.closeWindow($('".($f->ventana)."'));");
+/** - - - - **/
 ?>

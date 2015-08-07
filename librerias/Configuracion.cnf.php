@@ -1,6 +1,7 @@
 <?php
 $root = (!isset($root)) ? "../../../" : $root;
 require_once($root . "librerias/Configuracion.cnf.php");
+Sesion::init();
 // Modulo
 if(!class_exists('Usuarios_Historial')) {require_once($root."modulos/usuarios/librerias/Usuarios_Historial.class.php");}
 if(!class_exists('Usuarios_Jerarquias')) {require_once($root."modulos/usuarios/librerias/Usuarios_Jerarquias.class.php");}

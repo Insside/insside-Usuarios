@@ -4,9 +4,8 @@ $sesion=new Sesion();
 $cadenas = new Cadenas();
 $fechas = new Fechas();
 $validaciones = new Validaciones();
-$empleados=new Empleados();
-$equipos=new Usuarios_Equiposs();
-
+$empleados=new Usuarios_Perfiles();
+$equipos=new Usuarios_Equipos();
 /* 
  * Copyright (c) 2014, Alexis
  * All rights reserved.
@@ -32,7 +31,6 @@ $equipos=new Usuarios_Equiposs();
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 /** Valores **/
 $usuario=Sesion::usuario();
 $valores['usuario']=time();
@@ -48,13 +46,13 @@ $f->campos['usuario']=$f->text("usuario",$valores['usuario'], "15","required cod
 $f->campos['empleado']=$empleados->combo("empleado","");
 $f->campos['alias']=$f->text("alias",$valores['alias'], "64","required", false);
 $f->campos['clave']=$f->text("clave",$valores['clave'], "64","required", false);
-$f->campos['equipo']=$equipos->combo("equipo","");
+$f->campos['equipo']=$equipos->combo_electoral("equipo","");
 $f->campos['fecha']=$f->text("fecha",$valores['fecha'], "10","required automatico", true);
 $f->campos['hora']=$f->text("hora",$valores['hora'], "8","required automatico", true);
 $f->campos['creador']=$f->text("creador",$valores['creador'], "10","required automatico", true);
 $f->campos['ayuda'] = $f->button("ayuda" . $f->id, "button","Ayuda");
 $f->campos['cancelar'] = $f->button("cancelar" . $f->id, "button","Cancelar");
-$f->campos['continuar'] = $f->button("continuar" . $f->id, "submit","Continuar");
+$f->campos['continuar'] = $f->button("continuar" . $f->id, "submit","Crear");
 /** Celdas **/
 $f->celdas["usuario"] = $f->celda("Código de Usuario:", $f->campos['usuario']);
 $f->celdas["empleado"] = $f->celda("Perfil de Empleado:", $f->campos['empleado']);
@@ -84,5 +82,5 @@ $f->botones($f->campos['continuar'], "inferior-derecha");
 $f->JavaScript("MUI.titleWindow($('" . ($f->ventana) . "'), \"Crear Usuario\");");
 $f->JavaScript("MUI.resizeWindow($('" . ($f->ventana) . "'), {width: 480, height:260});");
 $f->JavaScript("MUI.centerWindow($('" . $f->ventana . "'));");
-$f->eClick("cancelar" . $f->id, "MUI.closeWindow($('" . $f->ventana . "'));");
+$f->eClick("cancelar" . $f->id, "MUI.closeWindow($('".$f->ventana."'));");
 ?>

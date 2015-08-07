@@ -1,5 +1,5 @@
 <?php
-$roles=new Roles();
+$roles=new Usuarios_Roles();
 /*
  * Copyright (c) 2014, Alexis
  * All rights reserved.
@@ -26,15 +26,15 @@ $roles=new Roles();
  * POSSIBILITY OF SUCH DAMAGE.
  */
 /** Variables **/
+$usuario=Sesion::usuario();
 $cadenas = new Cadenas();
 $fechas = new Fechas();
 $validaciones = new Validaciones();
-$sesion=new Sesion();
 $rol=$roles->consultar($validaciones->recibir("rol"));
 /** Valores **/
 $itable=$validaciones->recibir("itable");
 $valores=$rol;
-$valores['creador']=$sesion->consultar("usuario");
+$valores['creador']=$usuario['usuario'];
 $html="<div id=\"i100x100_modificar\" style=\"float: left;\"></div>";
 $html.="<div class=\"notificacion\"><p><b>Recuerde</b>: "
         . "El presente formulario le permitirá modificar el nombre y descripción formal de un Rol, se "

@@ -1,7 +1,7 @@
 <?php
 $usuarios = new Usuarios();
-$politicas = new Politicas();
-$jerarquias = new Jerarquias();
+$politicas = new Usuarios_Politicas();
+$jerarquias = new Usuarios_Jerarquias();
 
 /*
  * Copyright (c) 2013, Alexis

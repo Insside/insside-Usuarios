@@ -1,4 +1,5 @@
 <?php
+
 $root = (!isset($root)) ? "../../../" : $root;
 require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
 /*
@@ -38,26 +39,27 @@ require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
  * @author Alexis
  */
 class Usuarios_Perfiles {
-  var $tabla="usuarios_perfiles";
-  var $indice="perfil";
+
+  var $tabla = "usuarios_perfiles";
+  var $indice = "perfil";
   var $sesion;
   var $fechas;
   var $cadenas;
-  
-  function Usuarios_Perfiles(){
+
+  function Usuarios_Perfiles() {
     $this->sesion = new Sesion();
     $this->fechas = new Fechas();
     $this->cadenas = new Cadenas();
     $db = new MySQL();
-    if(!$db->sql_tablaexiste($this->tabla)){
+    if (!$db->sql_tablaexiste($this->tabla)) {
       $this->tabla_crear();
     }
-    $db->sql_close();    
+    $db->sql_close();
   }
 
   function consultar($perfil) {
     $db = new MySQL();
-    $consulta = $db->sql_query("SELECT * FROM `".$this->tabla."` WHERE `".$this->indice."` = '" . $perfil . "'");
+    $consulta = $db->sql_query("SELECT * FROM `" . $this->tabla . "` WHERE `" . $this->indice . "` = '" . $perfil . "'");
     $fila = $db->sql_fetchrow($consulta);
     $db->sql_close();
     return($fila);
@@ -65,15 +67,15 @@ class Usuarios_Perfiles {
 
   function actualizar($perfil, $campo, $valor) {
     $db = new MySQL();
-    $sql = "UPDATE `".$this->tabla."` SET `" . $campo . "`='" . $valor . "' WHERE `".$this->indice."`='" . $perfil . "';";
+    $sql = "UPDATE `" . $this->tabla . "` SET `" . $campo . "`='" . $valor . "' WHERE `" . $this->indice . "`='" . $perfil . "';";
     $consulta = $db->sql_query($sql);
     $db->sql_close();
   }
-  
-    function crear() {
+
+  function crear() {
     $perfil = time();
     $db = new MySQL();
-    $sql = "INSERT INTO `".$this->tabla."` SET ";
+    $sql = "INSERT INTO `" . $this->tabla . "` SET ";
     $sql.="`empleado`='" . $perfil . "',";
     $sql.="`estado`='ACTIVO',";
     $sql.="`usuario`=NULL,";
@@ -88,15 +90,14 @@ class Usuarios_Perfiles {
 
   function eliminar($perfil) {
     $db = new MySQL();
-    $sql = "DELETE FROM `".$this->tabla."` WHERE `".$this->indice."`='" . $perfil . "';";
+    $sql = "DELETE FROM `" . $this->tabla . "` WHERE `" . $this->indice . "`='" . $perfil . "';";
     $consulta = $db->sql_query($sql);
     $db->sql_close();
   }
-  
-  
-  function tabla_crear(){
+
+  function tabla_crear() {
     $db = new MySQL();
-    $sql="CREATE TABLE `usuarios_perfiles` (
+    $sql = "CREATE TABLE `usuarios_perfiles` (
         `empleado` int(10) unsigned zerofill NOT NULL DEFAULT '0000000000' COMMENT 'Numero Identificación',
         `documento` enum('CC','CE') DEFAULT 'CC',
         `nombres` varchar(255) NOT NULL DEFAULT '',
@@ -115,6 +116,20 @@ class Usuarios_Perfiles {
     $consulta = $db->sql_query($sql);
     $db->sql_close();
     return($consulta);
+  }
+
+  function combo($name, $selected) {
+    $db = new MySQL();
+    $sql = "SELECT * FROM `usuarios_perfiles` ORDER BY `nombre` DESC";
+    $consulta = $db->sql_query($sql);
+    $html = ('<select name="' . $name . '"id="' . $name . '">');
+    $conteo = 0;
+    while ($fila = $db->sql_fetchrow($consulta)) {
+      $html.=('<option value="' . $fila['perfil'] . '"' . (($selected == $fila['perfil']) ? "selected" : "") . '>' . $fila['perfil'] . ": " . $fila['nombre'] . " " . $fila['apellidos'] . '</option>');
+      $conteo++;
+    } $db->sql_close();
+    $html.=("</select>");
+    return($html);
   }
 
 }
