@@ -59,7 +59,7 @@ $f->campos['hora']=$f->text("hora",$valores['hora'], "8","required automatico", 
 $f->campos['creador']=$f->text("creador",$valores['creador'], "10","required automatico", true);
 $f->campos['ayuda'] = $f->button("ayuda" . $f->id, "button","Ayuda");
 $f->campos['cancelar'] = $f->button("cancelar" . $f->id, "button","Cancelar");
-$f->campos['continuar'] = $f->button("continuar" . $f->id, "submit","Continuar");
+$f->campos['continuar'] = $f->button("continuar" . $f->id, "submit","Registrar");
 /** Celdas **/
 $f->celdas['info']=$f->celda("",$html,"","notificacion");
 $f->celdas["rol"] = $f->celda("Rol:", $f->campos['rol'],"","w100");
@@ -80,8 +80,8 @@ $f->filas($f->fila['f2']);
 $f->filas($f->fila['f3']);
 /** Botones **/
 $f->botones($f->campos['ayuda'], "inferior-izquierda");
-$f->botones($f->campos['cancelar'], "inferior-derecha");
 $f->botones($f->campos['continuar'], "inferior-derecha");
+$f->botones($f->campos['cancelar'], "inferior-derecha");
 /** JavaScript * */
 $f->JavaScript("MUI.titleWindow($('" . ($f->ventana) . "'), \"Nuevo Rol\");");
 $f->JavaScript("MUI.resizeWindow($('" . ($f->ventana) . "'), {width:640, height: 440});");

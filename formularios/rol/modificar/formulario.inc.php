@@ -52,7 +52,7 @@ $f->campos['creador']=$f->text("creador",$valores['creador'], "10","required aut
 $f->campos['ayuda'] = $f->button("ayuda" . $f->id, "button","Ayuda");
 $f->campos['permisos'] = $f->button("permisos". $f->id, "button","Permisos");
 $f->campos['cancelar'] = $f->button("cancelar" . $f->id, "button","Cancelar");
-$f->campos['continuar'] = $f->button("continuar" . $f->id, "submit","Continuar");
+$f->campos['continuar'] = $f->button("continuar" . $f->id, "submit","Modificar");
 /** Celdas **/
 $f->celdas['info']=$f->celda("",$html,"","notificacion");
 $f->celdas["rol"] = $f->celda("Rol:", $f->campos['rol']);
@@ -74,10 +74,11 @@ $f->filas($f->fila['f3']);
 /** Botones **/
 $f->botones($f->campos['ayuda'], "inferior-izquierda");
 $f->botones($f->campos['permisos'], "inferior-derecha");
-$f->botones($f->campos['cancelar'], "inferior-derecha");
 $f->botones($f->campos['continuar'], "inferior-derecha");
+$f->botones($f->campos['cancelar'], "inferior-derecha");
+
 /** JavaScript * */
-$f->eClick("permisos" . $f->id,"MUI.Usuarios_Roles_Rol_Permisos('".$rol['rol']."');MUI.closeWindow($('" . $f->ventana . "'));");
+$f->eClick("permisos" . $f->id,"MUI.Usuarios_Rol_Politicas_Modificar('".$rol['rol']."','$itable');MUI.closeWindow($('" . $f->ventana . "'));");
 $f->JavaScript("MUI.titleWindow($('" . ($f->ventana) . "'), \"Modificar Rol - ".$rol['nombre']."\");");
 $f->JavaScript("MUI.resizeWindow($('" . ($f->ventana) . "'), {width: 480, height: 410});");
 $f->JavaScript("MUI.centerWindow($('" . $f->ventana . "'));");

@@ -32,26 +32,27 @@ $usuario=Sesion::usuario();
 $v['uid']=$usuario['usuario'];
 $v['criterio']=$validaciones->recibir("criterio");
 $v['valor']=$validaciones->recibir("valor");
-$v['fechainicial']=$validaciones->recibir("fechainicial");
-$v['fechafinal']=$validaciones->recibir("fechafinal");
+$v['inicio']=$validaciones->recibir("inicio");
+$v['fin']=$validaciones->recibir("fin");
 $v['transaccion']=$validaciones->recibir("transaccion");
 $v['url']="modulos/usuarios/formularios/usuarios/consultar/usuarios.json.php?"
         . "uid=".$v['uid']
         . "&criterio=".$v['criterio']
         . "&valor=".$v['valor']
-        . "&fechainicial=".$v['fechainicial']
-        . "&fechafinal=".$v['fechafinal']
+        . "&inicio=".$v['inicio']
+        . "&fin=".$v['fin']
         . "&transaccion=".$v['transaccion'];
 
 /** Creación de la tabla **/
-$tabla = new iTable(array("id" => time(), "url" => $v['url']));
+$tabla = new iTable(array("id" => time(), "url" => $v['url'],"perPageOptions"=>array(100,200)));
+$tabla->boton('btnVer', 'Visualizar', 'usuario', "MUI.Usuarios_Usuario_Consultar", "pAbrir");
 $tabla->boton('btnCrear', 'Crear', '', "MUI.Usuarios_Usuario_Crear", "pNuevo");
-$tabla->boton('btnVer', 'Historial', 'usuario', "MUI.Usuarios_Usuario_Consultar", "pAbrir");
+$tabla->boton('btnEstado', 'Estado', 'usuario', "MUI.Usuarios_Usuario_Estado", "pEliminar");
 $tabla->boton('btnModificar', 'Modificar', 'usuario', "MUI.Usuarios_Usuario_Modificar", "pEditar");
-//$tabla->boton('btnEliminar', 'Eliminar', 'usuario', "MUI.Usuarios_Roles_Rol_Eliminar", "pEliminar");
-$tabla->boton('btnBuscar', 'Buscar', '', "MUI.Usuarios_Usuarios_Complemento_Buscar", "pBuscar");
-//$tabla->boton('btnRoles', 'Roles', 'usuario', "MUI.Usuarios_Usuario_Roles", "pRoles");
+$tabla->boton('btnBuscar', 'Buscar', '', "MUI.Usuarios_Usuarios_Componente_Busqueda", "pBuscar");
+$tabla->boton('btnRoles', 'Roles', 'usuario', "MUI.Usuarios_Usuario_Roles", "pRoles");
 $tabla->columna('cUsuario', 'Usuario', 'usuario', 'string', '90', 'center', 'false');
+$tabla->columna('cEstado', 'E', 'iconoestado', 'string', '25', 'center', 'false');
 $tabla->columna('cAliasl', 'Alias', 'alias', 'string', '100', 'left', 'false');
 $tabla->columna('cNombre', 'Nombre Completo', 'nombre', 'string', '300', 'left', 'false');
 $tabla->columna('cFecha', 'Fecha', 'fecha', 'date', '90', 'center', 'false');

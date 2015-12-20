@@ -1,8 +1,7 @@
 <?php
-$usuarios=new Usuarios();
-$cadenas=new Cadenas();
-/* 
- * Copyright (c) 2015, Alexis
+
+/*
+ * Copyright (c) 2014, Alexis
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,44 +25,52 @@ $cadenas=new Cadenas();
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-$usuario=$usuarios->consultar($validaciones->recibir("usuario"));
-
-$db = new MySQL();
-$consulta = $db->sql_query("SELECT * FROM `usuarios_acciones` WHERE(`usuario`='" . $usuario['usuario']. "') ORDER BY `fecha`,`hora` DESC;");
-$tabla="<table>"
-        . "<tr style=\"  border-bottom: solid 1px #cccccc;padding-bottom: 3px;\">"
-        . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;\"><b>#</b></td>"
-        . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;\"><b>Fecha</b></td>"
-        . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;\"><b>Hora</b></td>"
-        . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;\"><b>Modulo</b></td>"
-        . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;\"><b>Tipo</b></td>"
-        . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;\"><b>Valor</b></td>"
-        . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;\"><b>Resumen</b></td>"
-        . "</tr>";
-$conteo=0;
-while($fila=$db->sql_fetchrow($consulta)){
-  $conteo++;
-  $tabla.="<tr style=\"  border-bottom: solid 1px #cccccc;padding-top: 3px;padding-bottom: 3px;\">"
-          . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;white-space: nowrap\">".$conteo."</td>"
-          . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;white-space: nowrap\">".$fila['fecha']."</td>"
-          . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;white-space: nowrap\">".$fila['hora']."</td>"
-          . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;white-space: nowrap\">".$fila['modulo']."</td>"
-          . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;white-space: nowrap\">".$cadenas->capitalizar($fila['tipo'])."</td>"
-          . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;white-space: nowrap\">".$cadenas->capitalizar($fila['valor'])."</td>"
-          . "<td style=\"  border-right: solid 1px #cccccc;padding-right: 5px;padding-left: 5px;white-space:nowrap;text-overflow: ellipsis;\">".$cadenas->recortar($fila['descripcion'],25)."</td>"
-          . "</tr>";
-}
-$tabla.="</table>";
-$db->sql_close();
-
-
-$f->celdas["tabla"] = $f->celda("",$tabla);
-/** Filas **/
-$f->fila["tabla"] = $f->fila($f->celdas["tabla"]);
-/** Compilando **/
-$f->filas($f->fila['tabla']);
-/** JavaScript **/
-$f->JavaScript("MUI.titleWindow($('" . ($f->ventana) . "'),'Historial Detallado de Acciones <span style=\"color:#cccccc;\">v0.1</span>');");
-$f->JavaScript("MUI.resizeWindow($('" . ($f->ventana) . "'), {width: 750, height:400});");
+/** Variables * */
+$cadenas = new Cadenas();
+$fechas = new Fechas();
+$validaciones = new Validaciones();
+$sesion = new Sesion();
+$usuarios = new Usuarios();
+/** Valores * */
+$itable = $validaciones->recibir("itable");
+$v = $usuarios->consultar($validaciones->recibir("usuario"));
+/** Campos * */
+$f->oculto("itable", $itable);
+$f->oculto("usuario", $v['usuario']);
+$f->campos['ayuda'] = $f->button("ayuda" . $f->id, "button", "Ayuda");
+$f->campos['cancelar'] = $f->button("cancelar" . $f->id, "button", "Cerrar");
+$f->campos['modificar'] = $f->button("modificar" . $f->id, "button", "Modificar");
+require_once($root . "modulos/usuarios/formularios/usuario/visualizar/segmentos/informacion.inc.php");
+require_once($root . "modulos/usuarios/formularios/usuario/visualizar/segmentos/roles.inc.php");
+require_once($root . "modulos/usuarios/formularios/usuario/visualizar/segmentos/historial.inc.php");
+require_once($root . "modulos/usuarios/formularios/usuario/visualizar/segmentos/creador.inc.php");
+/** Tabs * */
+$f->fila["tabs"] = ""
+        . "<ul id=\"tabs\" class=\"iTabs\">"
+        . "<li><a class=\"mufuvt tab\" href=\"#\" id=\"mufut1\">Información</a></li>"
+        . "<li><a class=\"mufuvt tab\" href=\"#\" id=\"mufut2\">Roles</a></li>"
+        . "<li><a class=\"mufuvt tab\" href=\"#\" id=\"mufut3\">Historial</a></li>"
+        . "<li><a class=\"mufuvt tab\" href=\"#\" id=\"mufut4\">Creador</a></li>"
+        . "</ul>";
+$f->fila["home"] = ""
+        . "<div id=\"home\">"
+        . "<div class=\"mufuvtf feature\">" . $f->fila["informacion"] . "</div>"
+        . "<div class=\"mufuvtf feature\">" . $f->fila["roles"] . "</div>"
+        . "<div class=\"mufuvtf feature\">" . $f->fila["historial"] . "</div>"
+        . "<div class=\"mufuvtf feature\">" . $f->fila["creador"] . "</div>"
+        . "</div>";
+/** Compilando * */
+$f->filas($f->fila['tabs']);
+$f->filas($f->fila['home']);
+/** Botones * */
+$f->botones($f->campos['ayuda'], "inferior-izquierda");
+$f->botones($f->campos['modificar'], "inferior-derecha");
+$f->botones($f->campos['cancelar'], "inferior-derecha");
+/** JavaScript * */
+$f->JavaScript("MUI.titleWindow($('" . ($f->ventana) . "'), \"Usuario " . $v['usuario'] . " " . $v['alias'] . "\");");
+$f->JavaScript("MUI.resizeWindow($('" . ($f->ventana) . "'), {width:640, height: 370});");
 $f->JavaScript("MUI.centerWindow($('" . $f->ventana . "'));");
+$f->eClick("cancelar" . $f->id, "MUI.closeWindow($('" . $f->ventana . "'));");
+$f->eClick("modificar" . $f->id, "MUI.Usuarios_Usuario_Modificar('" . $v["usuario"] . "','" . $itable . "');MUI.closeWindow($('" . $f->ventana . "'));");
+$f->JavaScript("var tabs" . $f->id . "= new iTabs('.mufuvt','.mufuvtf',{autoplay: false,transitionDuration:500,slideInterval:3000,hover:true});");
 ?>

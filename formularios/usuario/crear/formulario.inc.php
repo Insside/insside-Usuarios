@@ -4,7 +4,7 @@ $sesion=new Sesion();
 $cadenas = new Cadenas();
 $fechas = new Fechas();
 $validaciones = new Validaciones();
-$empleados=new Usuarios_Perfiles();
+$perfils=new Usuarios_Perfiles();
 $equipos=new Usuarios_Equipos();
 /* 
  * Copyright (c) 2014, Alexis
@@ -34,19 +34,21 @@ $equipos=new Usuarios_Equipos();
 /** Valores **/
 $usuario=Sesion::usuario();
 $valores['usuario']=time();
-$valores['empleado']=$validaciones->recibir("_empleado");
+$valores['perfil']=$validaciones->recibir("_perfil");
 $valores['alias']=$validaciones->recibir("_alias");
 $valores['clave']=$validaciones->recibir("_clave");
 $valores['equipo']=$validaciones->recibir("_equipo");
 $valores['fecha']=$fechas->hoy();
 $valores['hora']=$fechas->ahora();
 $valores['creador']=$usuario['usuario'];
+$valores['itabla']=$validaciones->recibir("itabla");
 /** Campos **/
+$f->oculto("itabla",$valores['itabla']);
 $f->campos['usuario']=$f->text("usuario",$valores['usuario'], "15","required codigo", true);
-$f->campos['empleado']=$empleados->combo("empleado","");
+$f->campos['perfil']=$perfils->combo("perfil","");
 $f->campos['alias']=$f->text("alias",$valores['alias'], "64","required", false);
 $f->campos['clave']=$f->text("clave",$valores['clave'], "64","required", false);
-$f->campos['equipo']=$equipos->combo_electoral("equipo","");
+$f->campos['equipo']=$equipos->combo("equipo","");
 $f->campos['fecha']=$f->text("fecha",$valores['fecha'], "10","required automatico", true);
 $f->campos['hora']=$f->text("hora",$valores['hora'], "8","required automatico", true);
 $f->campos['creador']=$f->text("creador",$valores['creador'], "10","required automatico", true);
@@ -55,7 +57,7 @@ $f->campos['cancelar'] = $f->button("cancelar" . $f->id, "button","Cancelar");
 $f->campos['continuar'] = $f->button("continuar" . $f->id, "submit","Crear");
 /** Celdas **/
 $f->celdas["usuario"] = $f->celda("Código de Usuario:", $f->campos['usuario']);
-$f->celdas["empleado"] = $f->celda("Perfil de Empleado:", $f->campos['empleado']);
+$f->celdas["perfil"] = $f->celda("Perfil de Empleado:", $f->campos['perfil']);
 $f->celdas["alias"] = $f->celda("Alias de Usuario:", $f->campos['alias']);
 $f->celdas["clave"] = $f->celda("Clave:", $f->campos['clave']);
 $f->celdas["equipo"] = $f->celda("Dependencia / Area / Equipo:", $f->campos['equipo']);
@@ -64,7 +66,7 @@ $f->celdas["hora"] = $f->celda("Hora:", $f->campos['hora']);
 $f->celdas["creador"] = $f->celda("Creador:", $f->campos['creador']);
 /** Filas **/
 $f->fila["fila1"] = $f->fila($f->celdas["usuario"].$f->celdas["fecha"].$f->celdas["hora"].$f->celdas["creador"]);
-$f->fila["fila2"] = $f->fila($f->celdas["empleado"]);
+$f->fila["fila2"] = $f->fila($f->celdas["perfil"]);
 $f->fila["fila3"] = $f->fila($f->celdas["alias"].$f->celdas["clave"]);
 $f->fila["fila4"] = $f->fila($f->celdas["equipo"]);
 $f->fila["fila5"] = $f->fila("");

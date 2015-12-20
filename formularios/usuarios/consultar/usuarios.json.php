@@ -41,8 +41,8 @@ $usuario = Sesion::usuario();
 /** Variables Recibidas * */
 $v['criterio'] = $validaciones->recibir("criterio");
 $v['valor'] = $validaciones->recibir("valor");
-$v['fechainicial'] = $validaciones->recibir("fechainicial");
-$v['fechafinal'] = $validaciones->recibir("fechafinal");
+$v['inicio'] = $validaciones->recibir("inicio");
+$v['fin'] = $validaciones->recibir("fin");
 $v['transaccion'] = $validaciones->recibir("transaccion");
 $v['page'] = $validaciones->recibir("page");
 $v['perpage'] = $validaciones->recibir("perpage");
@@ -52,8 +52,8 @@ $v['perpage'] = $validaciones->recibir("perpage");
  * cual se presuponen la fecha de la primera solicitud y la ultima que se hallan registrado por
  * el usuario activo en el sistema de atencion de solicitudes.
  */
-$v['fechainicial'] = empty($v['fechainicial']) ? "0000-00-00" : $v['fechainicial'];
-$v['fechafinal'] = empty($v['fechafinal']) ? "2018-01-01" : $v['fechafinal'];
+$v['inicio'] = empty($v['inicio']) ? "0000-00-00" : $v['inicio'];
+$v['fin'] = empty($v['fin']) ? "2018-01-01" : $v['fin'];
 
 /* * Variables Definidas * */
 if (!empty($v['page'])) {
@@ -82,9 +82,9 @@ if (!empty($v['page'])) {
  * solamente aquellos que correspondan a peticiones a la espera de respuesta.
  * */
 if (!empty($v['criterio']) && !empty($v['valor']) && $v['criterio'] != "estado") {
-  $buscar = "WHERE((`fecha` BETWEEN '" . $v['fechainicial'] . "' AND '" . $v['fechafinal'] . "')AND(`" . $v['criterio'] . "` LIKE '%" . $v['valor'] . "%')AND( `creador`='" . $usuario['usuario'] . "' OR `responsable`='" . $usuario['usuario'] . "'))";
+  $buscar = "WHERE((`fecha` BETWEEN '" . $v['inicio'] . "' AND '" . $v['fin'] . "')AND(`" . $v['criterio'] . "` LIKE '%" . $v['valor'] . "%'))";
 } else {
-  $buscar = "WHERE(`fecha` BETWEEN '" . $v['fechainicial'] . "' AND '" . $v['fechafinal'] . "')";
+  $buscar = "WHERE(`fecha` BETWEEN '" . $v['inicio'] . "' AND '" . $v['fin'] . "')";
 }
 
 $db = new MySQL();
@@ -97,6 +97,7 @@ $ret = array();
 while ($fila = $db->sql_fetchrow($consulta)) {
   $perfil=$perfiles->consultar($fila['perfil']);
   $fila['nombre']=$cadenas->capitalizar($perfil['nombres']." ".$perfil['apellidos']);
+  $fila['iconoestado']="<div class=\"iti14x14 i014x014_" . strtolower($fila['estado']). "\"></div>";
   array_push($ret, $fila);
 }
 

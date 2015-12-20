@@ -93,5 +93,5 @@ $f->JavaScript("MUI.titleWindow($('".($f->ventana)."'),\"Perfil Personal - <span
 $f->JavaScript("MUI.resizeWindow($('".($f->ventana)."'),{width: 640,height:350});");
 $f->JavaScript("MUI.centerWindow($('".$f->ventana."'));");
 $f->eClick("cancelar".$f->id,"MUI.closeWindow($('".$f->ventana."'));");
-$f->eClick("modificar".$f->id,"MUI.Usuarios_Usuario_Perfil_Modificar();MUI.closeWindow($('".$f->ventana."'));");
+$f->eClick("modificar".$f->id,"MUI.Usuarios_Perfil_Modificar();MUI.closeWindow($('".$f->ventana."'));");
 ?>

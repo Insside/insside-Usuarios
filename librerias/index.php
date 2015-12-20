@@ -1,4 +1,8 @@
 <?php
+/**
+ * Este modulo permite la gestion integral de los usuarios asignados en el sistema.
+ * @package insside\usuarios
+ **/
 $root = (!isset($root)) ? "../../../" : $root;
 require_once($root . "librerias/Configuracion.cnf.php");
 /* 

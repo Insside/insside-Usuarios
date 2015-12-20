@@ -27,9 +27,9 @@ $sesion=new Sesion();
  */
 $criterio=$validaciones->recibir("criterio");
 $valor=$validaciones->recibir("valor");
-$inicial=$validaciones->recibir("fechainicial");
-$final=$validaciones->recibir("fechafinal");
-$sesion->registrar("fechainicial", $inicial);
-$sesion->registrar("fechafinal", $final);
-$f->javascripts("MUI.Solicitudes_Propias_Busqueda('".$criterio."','".$valor."','".$inicial."','".$final."');");
+$inicio=$validaciones->recibir("fechainicial");
+$fin=$validaciones->recibir("fechafinal");
+$sesion->registrar("fechainicial", $inicio);
+$sesion->registrar("fechafinal", $fin);
+$f->javascripts("MUI.Usuarios_Usuarios_Consultar('".$criterio."','".$valor."','".$inicio."','".$fin."');");
 ?>

@@ -1,6 +1,6 @@
 <?php
-$root = (!isset($root)) ? "../../../../../../" : $root;
-require_once($root . "modulos/solicitudes/librerias/Configuracion.cnf.php");
+$root = (!isset($root)) ? "../../../../../../../" : $root;
+require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
 $validaciones=new Validaciones();
 /* 
  * Copyright (c) 2014, Alexis
@@ -29,8 +29,8 @@ $validaciones=new Validaciones();
  */
 $transaccion=$validaciones->recibir("transaccion");
 $trasmision = $validaciones->recibir("trasmision");
-$url['formulario']=$root . "modulos/usuarios/formularios/usuarios/complementos/busqueda/formulario.inc.php";
-$url['procesador']=$root . "modulos/usuarios/formularios/usuarios/complementos/busqueda/procesador.inc.php";
+$url['formulario']=$root . "modulos/usuarios/formularios/usuarios/consultar/complementos/busqueda/formulario.inc.php";
+$url['procesador']=$root . "modulos/usuarios/formularios/usuarios/consultar/complementos/busqueda/procesador.inc.php";
 
 $f = new Formularios($transaccion);
 echo($f->apertura());

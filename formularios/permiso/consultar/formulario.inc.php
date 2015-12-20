@@ -72,7 +72,7 @@ $f->fila["informacion"]=$f->fila["fila0"].$f->fila["fila1"].$f->fila["fila2"].$f
 $f->fila["trazabilidad"]=$f->fila["fila4"].$f->fila["fila5"].$f->fila["fila6"].$f->fila["fila7"];   
 
 $f->fila["tabs"]=""
-        . "<ul id=\"tabs\">"
+        . "<ul id=\"tabs\" class=\"iTabs\">"
         . "<li><a class=\"tab\" href=\"#\" id=\"one\">Información</a></li>"
         . "<li><a class=\"tab\" href=\"#\" id=\"two\">Trazabilidad</a></li>"
         ."</ul>";

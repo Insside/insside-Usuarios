@@ -29,8 +29,10 @@ $usuarios=new Usuarios();
  */
 
 /** Celdas **/
+$itabla=$validaciones->recibir("itabla");
 $datos["usuario"]=$validaciones->recibir("usuario");
 $datos["empleado"]=$validaciones->recibir("empleado");
+$datos["perfil"]=$validaciones->recibir("perfil");
 $datos["alias"]=$validaciones->recibir("alias");
 $datos["clave"]=$validaciones->recibir("clave");
 $datos["equipo"]=$validaciones->recibir("equipo");
@@ -38,8 +40,9 @@ $datos["fecha"]=$validaciones->recibir("fecha");
 $datos["hora"]=$validaciones->recibir("hora");
 $datos["creador"]=$validaciones->recibir("creador");
 $usuarios->crear($datos);
+print_r($_REQUEST);
 /** JavaScripts **/
-$f->JavaScript("if(itable_usuarios){itable_usuarios.refresh();}");
+//$f->JavaScript($itabla.".refresh();");
 $f->JavaScript("MUI.closeWindow($('".($f->ventana)."'));");
 /** - - - - **/
 ?>

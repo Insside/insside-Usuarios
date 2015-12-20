@@ -1,0 +1,24 @@
+<?php
+$root = (!isset($root)) ? "../../../" : $root;
+require_once($root . "librerias/Configuracion.cnf.php");
+/**
+ * @package Insside
+ * @subpackage Usuarios
+ * @author Jose Alexis Correa Valencia <jalexiscv@gmail.com>
+ * @copyright (c) 2015 www.insside.com
+ */
+
+Sesion::init();
+// Modulo
+require_once($root."modulos/usuarios/librerias/Usuarios_Historial.class.php");
+require_once($root."modulos/usuarios/librerias/Usuarios_Jerarquias.class.php");
+require_once($root."modulos/usuarios/librerias/Usuarios_Politicas.class.php");
+require_once($root."modulos/usuarios/librerias/Usuarios_Roles.class.php");
+require_once($root."modulos/usuarios/librerias/Usuarios_Equipos.class.php");
+require_once($root."modulos/usuarios/librerias/Usuarios_Perfiles.class.php");
+//require_once($root."modulos/usuarios/librerias/Usuarios_Menus.class.php");
+//require_once($root."modulos/usuarios/librerias/Usuarios_Modulo.class.php");
+//require_once($root."modulos/usuarios/librerias/Usuarios_Componentes.class.php");
+require_once($root."modulos/usuarios/librerias/Usuarios_Permisos.class.php");
+require_once($root."modulos/usuarios/librerias/Usuarios.class.php");
+?>

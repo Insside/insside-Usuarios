@@ -40,7 +40,7 @@ $t=$usuarios->conteo();
 
 <h2>Usuarios Registrados</h2>
 <p class="critico"><?php echo($t); ?></p>
-<div class="criticoporcentual"><a href="#" onClick="#">TOTAL 100%</a> </div>
+<div class="porcentual"><a href="#" onClick="#">TOTAL 100%</a> </div>
 <br>
 <p>  
     El Sistema Integral de Administración Informática(IMIS) se estructura en una gerarquia de permisos 

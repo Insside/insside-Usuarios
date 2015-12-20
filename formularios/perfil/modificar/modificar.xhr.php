@@ -39,7 +39,6 @@ if (empty($trasmision)) {
   require_once($url['formulario']);
 } else {
   require_once($url['procesador']);
-  require_once($url['formulario']);
 }
 $f->JavaScript("MUI.centerWindow($('".$f->ventana."'));");
 echo($f->generar());

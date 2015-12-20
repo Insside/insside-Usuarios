@@ -1,7 +1,8 @@
 <?php
+
 $usuarios = new Usuarios();
 $cadenas = new Cadenas();
-$equipos=new Usuarios_Equipos();
+$equipos = new Usuarios_Equipos();
 /*
  * Copyright (c) 2015, Alexis
  * All rights reserved.
@@ -27,31 +28,35 @@ $equipos=new Usuarios_Equipos();
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+$usuario = Sesion::usuario();
 $transaccion = $validaciones->recibir("transaccion");
-$usuario = Sesion::usuario(); 
-$perfil = $usuarios->perfil($usuario['perfil']);
-$equipo=$equipos->consultar($usuario['equipo']);
-
+$perfil = $usuarios->perfil($validaciones->recibir("perfil"));
+$equipo = $equipos->consultar($usuario['equipo']);
+$componentes=new Componentes();
 
 if (!isset($perfil['foto']) || empty($perfil['foto'])) {
   $perfil['foto'] = "modulos/usuarios/imagenes/usuario.fw.png";
 }
 $perfil['nombre'] = $cadenas->capitalizar($perfil['nombres'] . " " . $perfil['apellidos']);
-$perfil['info'] = "<p>Este formulario le permitirá modificar parcialmente la información de su perfil personal y realizar el cambio de contraseña, si la información que desea modificar no es accesible mediante este formulario contacte al departamento de sistemas.</p>";
+$perfil['info'] = "<p>Este formulario le permitirá modificar  la información de un perfil, si la información que desea modificar no es accesible mediante este formulario contacte al departamento de sistemas.</p>";
 
 
 /** Campos * */
+$f->oculto("itable", $validaciones->recibir("itable"));
+$f->oculto("perfil", $validaciones->recibir("perfil"));
 $f->campos['info'] = $perfil['info'];
-$f->campos['equipo'] = $f->campo("equipo", $equipo['equipo'].": ".$equipo['nombre']);
+$f->campos['equipo'] = $f->campo("equipo", $equipo['equipo'] . ": " . $equipo['nombre']);
 $f->campos['perfil'] = $f->campo("perfil", $perfil['perfil']);
-$f->campos['nombres'] = $f->campo("nombres", $perfil['nombres']);
-$f->campos['apellidos'] = $f->campo("apellidos", $perfil['apellidos']);
+$f->campos['documento'] = $componentes->combo_documentos("documento",$perfil['documento']);
+$f->campos['identificacion'] = $f->iTextBox("identificacion","identificacion",$perfil['identificacion'],"required","10");
+$f->campos['sexo'] =$componentes->combo_sexo("sexo",$perfil['sexo']);
+$f->campos['nombres'] = $f->text("nombres", $perfil['nombres'], "128", "required", false);
+$f->campos['apellidos'] = $f->text("apellidos", $perfil['apellidos'], "128", "required", false);
 $f->campos['direccion'] = $f->text("direccion", $perfil['direccion'], "128", "required", false);
 $f->campos['telefonos'] = $f->text("telefonos", $perfil['telefonos'], "128", "required", false);
 $f->campos['correo'] = $f->text("correo", $perfil['correo'], "128", "required", false);
-$f->campos['sexo'] = $f->campo("sexo", $perfil['sexo']);
 $f->campos['creador'] = $f->campo("creador", $perfil['creador']);
-$f->campos['foto'] = "<img src=\"" . $perfil['foto'] ."\" width=\"200\" height=\"267\"/>";
+$f->campos['foto'] = "<img src=\"" . $perfil['foto'] . "\" width=\"200\" height=\"267\"/>";
 $f->campos['ayuda'] = $f->button("ayuda" . $f->id, "button", "Ayuda");
 $f->campos['modificar'] = $f->button("modificar" . $f->id, "submit", "Guardar");
 $f->campos['cancelar'] = $f->button("cancelar" . $f->id, "button", "Cerrar");
@@ -63,6 +68,9 @@ $f->campos['confirmacion'] = $f->clave("confirmacion" . $f->id, $usuario['clave'
 $f->celdas["info"] = $f->celda("", $f->campos['info']);
 $f->celdas["equipo"] = $f->celda("Equipo de Trabajo:", $f->campos['equipo']);
 $f->celdas["perfil"] = $f->celda("Perfil:", $f->campos['perfil']);
+$f->celdas["documento"] = $f->celda("Documento:", $f->campos['documento']);
+$f->celdas["identificacion"] = $f->celda("Identificación:", $f->campos['identificacion']);
+$f->celdas["sexo"] = $f->celda("Sexo:", $f->campos['sexo']);
 $f->celdas["nombres"] = $f->celda("Nombres:", $f->campos['nombres']);
 $f->celdas["apellidos"] = $f->celda("Apellidos:", $f->campos['apellidos']);
 $f->celdas["direccion"] = $f->celda("Dirección:", $f->campos['direccion']);
@@ -74,14 +82,15 @@ $f->celdas["clave"] = $f->celda("Clave:", $f->campos['clave']);
 $f->celdas["confirmacion"] = $f->celda("Confirmación:", $f->campos['confirmacion']);
 /** Filas * */
 $f->fila['sf1'] = $f->fila($f->celdas["info"]);
-$f->fila['sf2'] = $f->fila($f->celdas["perfil"] . $f->celdas["nombres"] . $f->celdas["apellidos"]);
-$f->fila['sf3'] = $f->fila($f->celdas["direccion"] . $f->celdas["telefonos"]);
-$f->fila['sf4'] = $f->fila($f->celdas["correo"]);
-$f->fila['sf5'] = $f->fila($f->celdas["clave"] . $f->celdas["confirmacion"]);
+$f->fila['sf2'] = $f->fila($f->celdas["perfil"].$f->celdas["documento"].$f->celdas["identificacion"]);
+$f->fila['sf3'] = $f->fila($f->celdas["sexo"].$f->celdas["nombres"] . $f->celdas["apellidos"]);
+$f->fila['sf4'] = $f->fila($f->celdas["direccion"] . $f->celdas["telefonos"]);
+$f->fila['sf5'] = $f->fila($f->celdas["correo"]);
+$f->fila['sf6'] = $f->fila($f->celdas["clave"] . $f->celdas["confirmacion"]);
 
 
 $f->celdas["foto"] = $f->celda("", $f->campos['foto'], "", "w200");
-$f->celdas["datos"] = $f->celda("", $f->fila['sf1'] . $f->fila['sf2'] . $f->fila['sf3'] . $f->fila['sf4'] . $f->fila['sf5']);
+$f->celdas["datos"] = $f->celda("", $f->fila['sf1'] . $f->fila['sf2'] . $f->fila['sf3'] . $f->fila['sf4']. $f->fila['sf5']);
 /** Filas * */
 $f->fila["f1"] = $f->fila($f->celdas["foto"] . $f->celdas["datos"]);
 //$f->fila["fila1"] = $f->fila($f->celdas["perfil"] . $f->celdas["nombres"] . $f->celdas["apellidos"]);

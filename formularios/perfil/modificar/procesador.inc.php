@@ -29,13 +29,27 @@ $validaciones=new Validaciones();
  */
 //print_r($_REQUEST);
 $usuario=Sesion::usuario();
-$up->actualizar($usuario['perfil'],'direccion', $validaciones->recibir("direccion"));
-$up->actualizar($usuario['perfil'],'telefonos', $validaciones->recibir("telefonos"));
-$up->actualizar($usuario['perfil'],'correo', $validaciones->recibir("correo"));
+$perfil= $validaciones->recibir("perfil");
+$itable=$validaciones->recibir("itable");
+
+$up->actualizar($perfil,'identificacion', $validaciones->recibir("identificacion"));
+$up->actualizar($perfil,'sexo', $validaciones->recibir("sexo"));
+$up->actualizar($perfil,'nombres', $validaciones->recibir("nombres"));
+$up->actualizar($perfil,'apellidos', $validaciones->recibir("apellidos"));
+$up->actualizar($perfil,'direccion', $validaciones->recibir("direccion"));
+$up->actualizar($perfil,'telefonos', $validaciones->recibir("telefonos"));
+$up->actualizar($perfil,'correo', $validaciones->recibir("correo"));
+
+
+
 if($validaciones->recibir("clave".$f->id)==$validaciones->recibir("confirmacion".$f->id)){
   $usuarios->actualizar($usuario['usuario'],'clave', $validaciones->recibir("clave".$f->id));
   echo("<div class=\"success\"><b>Notificación</b>: Actualización realizada correcta y exitosamente.</div>");
 }else{
   echo("<div class=\"error\"><b>Advertencia</b>: La clave y la confirmación no coinciden. </div>");
 }
+
+$f->JavaScript("MUI.closeWindow($('" . ($f->ventana) . "'));");
+$f->JavaScript("if(".$itable."){".$itable.".refresh();}");
+
 ?>

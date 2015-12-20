@@ -45,10 +45,11 @@ $v['url']="modulos/usuarios/formularios/roles/consultar/roles.json.php?"
 /** Creación de la tabla **/
 $tabla = new iTable(array("id" => time(), "url" => $v['url']));
 $tabla->boton('btnCrear', 'Crear', '', "MUI.Usuarios_Roles_Rol_Crear", "pNuevo");
+$tabla->boton('btnVisualizar', 'Visualizar', 'rol', "MUI.Usuarios_Rol_Visualizar", "pAbrir");
 $tabla->boton('btnModificar', 'Modificar', 'rol', "MUI.Usuarios_Roles_Rol_Modificar", "pEditar");
 $tabla->boton('btnEliminar', 'Eliminar', 'rol', "MUI.Usuarios_Roles_Rol_Eliminar", "pEliminar");
 //$tabla->boton('btnBuscar', 'Buscar', '', "MUI.Usuarios_Roles_Complementos_Buscar", "pBuscar");
-//$tabla->boton('btnPermisos', 'Permisos', 'rol', "MUI.Usuarios_Roles_Rol_Permisos", "pNuevo");
+$tabla->boton('btnPermisos', 'Permisos', 'rol', "MUI.Usuarios_Rol_Politicas_Modificar", "pNuevo");
 $tabla->columna('cRol', 'Rol', 'rol', 'string', '90', 'center', 'false');
 $tabla->columna('cNombrel', 'Nombre', 'nombre', 'string', '200', 'left', 'false');
 $tabla->columna('cDescripcion', 'Descripción', 'descripcion', 'string', '300', 'left', 'false');

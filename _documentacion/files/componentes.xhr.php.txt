@@ -1,0 +1,9 @@
+<?php
+$root = (!isset($root)) ? "../../" : $root;
+require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
+require_once($root."modulos/usuarios/librerias/Usuarios_Menus.class.php");
+$usuario=Sesion::usuario();
+
+$menus = new Usuarios_Menus();
+echo($menus->menu("0000020000",$usuario['usuario']));
+?>

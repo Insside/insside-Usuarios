@@ -1,6 +1,6 @@
 <?php
 $root = (!isset($root)) ? "../../../../../../../" : $root;
-require_once($root . "modulos/solicitudes/librerias/Configuracion.cnf.php");
+require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
 /*
  * Este archivo XHR retorna las estadisticas asociadas a las solicitudes procesadas por un usuario
  * del sistema las cuales a saber estan distribuidas como recibidas, procesadas y pendientes.

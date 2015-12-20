@@ -4,7 +4,7 @@ $sesion=new Sesion();
 $cadenas = new Cadenas();
 $fechas = new Fechas();
 $validaciones = new Validaciones();
-$empleados=new Usuarios_Perfiles();
+$perfils=new Usuarios_Perfiles();
 $equipos=new Usuarios_Equipos();
 $usuarios=new Usuarios();
 /************************************************************************
@@ -37,7 +37,7 @@ $itable=$validaciones->recibir("itable");
 /** Campos **/
 $f->oculto("itable",$itable); 
 $f->campos['usuario']=$f->text("usuario",$valores['usuario'], "15","required codigo", true);
-$f->campos['empleado']=$empleados->combo("empleado",$valores['empleado']);
+$f->campos['perfil']=$perfils->combo("perfil",$valores['perfil']);
 $f->campos['alias']=$f->text("alias",$valores['alias'], "64","required", false);
 $f->campos['clave']=$f->clave("clave",$valores['clave'], "64","required", false);
 $f->campos['equipo']=$equipos->combo("equipo",$valores['equipo']);
@@ -51,7 +51,7 @@ $f->campos['cancelar'] = $f->button("cancelar" . $f->id, "button","Cancelar");
 $f->campos['continuar'] = $f->button("continuar" . $f->id, "submit","Modificar");
 /** Celdas **/
 $f->celdas["usuario"] = $f->celda("Código de Usuario:", $f->campos['usuario']);
-$f->celdas["empleado"] = $f->celda("Perfil de Empleado:", $f->campos['empleado']);
+$f->celdas["perfil"] = $f->celda("Perfil de Empleado:", $f->campos['perfil']);
 $f->celdas["alias"] = $f->celda("Alias de Usuario:", $f->campos['alias']);
 $f->celdas["clave"] = $f->celda("Clave:", $f->campos['clave']);
 $f->celdas["equipo"] = $f->celda("Equipo:", $f->campos['equipo']);
@@ -61,16 +61,16 @@ $f->celdas["estado"] = $f->celda("Estado:", $f->campos['estado']);
 $f->celdas["creador"] = $f->celda("Creador:", $f->campos['creador']);
 /** Filas **/
 $f->fila["fila1"] = $f->fila($f->celdas["usuario"].$f->celdas["fecha"].$f->celdas["hora"].$f->celdas["creador"]);
-$f->fila["fila2"] = $f->fila($f->celdas["empleado"]);
+$f->fila["fila2"] = $f->fila($f->celdas["perfil"]);
 $f->fila["fila3"] = $f->fila($f->celdas["alias"].$f->celdas["clave"]);
 $f->fila["fila4"] = $f->fila($f->celdas["equipo"]);
-$f->fila["fila5"] = $f->fila($f->celdas["estado"]);
+//$f->fila["fila5"] = $f->fila($f->celdas["estado"]);
 /** Compilando **/
 $f->filas($f->fila['fila1']);
 $f->filas($f->fila['fila2']);
 $f->filas($f->fila['fila3']);
 $f->filas($f->fila['fila4']);
-$f->filas($f->fila['fila5']);
+//$f->filas($f->fila['fila5']);
 /** Botones **/
 $f->botones($f->campos['ayuda'], "inferior-izquierda");
 $f->botones($f->campos['roles'], "inferior-derecha");

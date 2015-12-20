@@ -39,6 +39,8 @@ $usuarios->actualizar($usuario,"clave",$validaciones->recibir("clave"));
 $usuarios->actualizar($usuario,"equipo",$validaciones->recibir("equipo"));
 $usuarios->actualizar($usuario,"creador",$validaciones->recibir("creador"));
 $usuarios->actualizar($usuario,"estado",$validaciones->recibir("estado"));
+$usuarios->actualizar($usuario,"perfil",$validaciones->recibir("perfil"));
+$usuarios->actualizar($usuario,"equipo",$validaciones->recibir("equipo"));
 /** JavaScripts **/
 $f->JavaScript("if(".$itable."){".$itable.".refresh();}");
 $f->JavaScript("MUI.closeWindow($('" . ($f->ventana) . "'));");

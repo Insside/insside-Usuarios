@@ -42,7 +42,7 @@ $info.="<div class=\"notificacion\"><p><b>Recuerde</b>: "
         . "del presente mensaje, seleccione los permisos que desea asignar.Verificado el listado de "
         . "permisos asignados presione el botón <i>“Asignar”</i> para concluir el procedimiento.</p></div>";
 
-$html="<table class=\"datosJerarquias\" width=\"100%\" cellpadding=\"3\">";
+$html="<div style=\"height:180px; overflow-y:scroll;\">";
   $db = new MySQL();
   $sql = "SELECT * FROM `aplicacion_permisos` ORDER BY `permiso`";
   $consulta = $db->sql_query($sql);
@@ -53,10 +53,10 @@ $html="<table class=\"datosJerarquias\" width=\"100%\" cellpadding=\"3\">";
     $class = 'even';
     if ($conteo % 2 == 0) {$class = 'odd';}
     $estado = $politicas->estado($rol['rol'], $fila['permiso']);
-    $html.=("	<tr class=\"" . $class . "\"><td><input name=\"permisos[" . $fila['permiso'] . "]\" type=\"checkbox\" value=\"true\" " . (($estado) ? 'checked="checked"' : '') . "/></td><td align=\"left\" nowrap>&nbsp;<b>" . $cadenas->capitalizar($fila['permiso']) . "</b></td></tr>");
+    $html.=("<div class=\"fila\" style=\"border:1px solid #cccccc;\"><div class=\"columna\"><input name=\"permisos[" . $fila['permiso'] . "]\" type=\"checkbox\" value=\"true\" " . (($estado) ? 'checked="checked"' : '') . "/>&nbsp;" . $cadenas->capitalizar($fila['permiso']) . "</div></div>");
   }
   $db->sql_close();
-$html.="</table>";
+$html.="</div>";
 /** Campos **/
 $f->oculto("rol", $rol['rol']);
 $f->campos['ayuda'] = $f->button("ayuda" . $f->id, "button","Ayuda");
@@ -73,8 +73,8 @@ $f->filas($f->fila['info']);
 $f->filas($f->fila['fila1']);
 /** Botones **/
 $f->botones($f->campos['ayuda'], "inferior-izquierda");
-$f->botones($f->campos['cancelar'], "inferior-derecha");
 $f->botones($f->campos['asignar'], "inferior-derecha");
+$f->botones($f->campos['cancelar'], "inferior-derecha");
 /** Javascripts **/
 $f->JavaScript("MUI.titleWindow($('" . ($f->ventana) . "'), \"Roles Asignados ["+$rol['nombre']+"]\");");
 $f->JavaScript("MUI.resizeWindow($('" . ($f->ventana) . "'), {width: 640, height:370});");

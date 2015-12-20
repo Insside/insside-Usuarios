@@ -1,0 +1,67 @@
+<?php 
+$root = (!isset($root)) ? "../../../" : $root;
+require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
+/**
+ * @package Insside
+ * @subpackage Usuarios
+ * @author Jose Alexis Correa Valencia <jalexiscv@gmail.com>
+ * @copyright (c) 2015 www.insside.com
+ */
+/**
+ * Description of Tesoreria_Modulo
+ *
+ * @author Jose Alexis Correa Valencia <jalexiscv@gmail.com>
+ */
+if (!class_exists('Usuarios_Modulo')) {
+
+    class Usuarios_Modulo {
+
+        public $modulo = "002";
+        private $nombre = "Usuarios";
+        private $titulo = "Modulo Control de Usuarios.";
+        private $descripcion = "Modulo Control de Usuarios.";
+        private $creador = "0";
+        private $permisos;
+
+        function Usuarios_Modulo() {
+            $consulta = $this->crear($this->modulo, $this->nombre, $this->titulo, $this->descripcion, $this->creador);
+            $this->permisos = new Usuarios_Permisos();
+            $this->permisos->permiso_crear($this->modulo, "USUARIOS-MODULO-A", "Acceso Modulo De Usuarios", "Permite acceder al modulo Usuarios.", "0000000000");
+            $this->permisos->permiso_crear($this->modulo, "USUARIOS-USUARIOS-R", "Visualizar Usuarios", "Permite visualizar los usuarios del sistema.", "0000000000");
+            $this->permisos->permiso_crear($this->modulo, "USUARIOS-USUARIOS-W", "Crear Usuarios", "Permite crear o actualizar usuarios en el sistema", "0000000000");
+            $this->permisos->permiso_crear($this->modulo, "USUARIOS-USUARIOS-U", "Actualizar Usuario", "Permite acceder al modulo Usuarios.", "0000000000");
+            $this->permisos->permiso_crear($this->modulo, "USUARIOS-USUARIOS-D", "Eliminar Usuarios", "Permite acceder al modulo Usuarios.", "0000000000");
+            $this->permisos->permiso_crear($this->modulo, "USUARIOS-EQUIPOS-A", "Acceso al componente equipos.", "Permite acceder al componente equipos de trabajo.", "0000000000");
+            $this->permisos->permiso_crear($this->modulo, "USUARIOS-EQUIPOS-R", "Visualizar equipos de trabajo existentes.", "Permite acceder al componente equipos de trabajo.", "0000000000");
+            $this->permisos->permiso_crear($this->modulo, "USUARIOS-EQUIPOS-W", "Crear equipos de trabajo.", "Permite acceder al componente equipos de trabajo.", "0000000000");
+            $this->permisos->permiso_crear($this->modulo, "USUARIOS-EQUIPOS-U", "Actualizar equipos de trabajo existentes.", "Permite acceder al componente equipos de trabajo.", "0000000000");
+            $this->permisos->permiso_crear($this->modulo, "USUARIOS-EQUIPOS-D", "Eliminar equipos de trabajo existentes.", "Permite acceder al componente equipos de trabajo.", "0000000000");
+        }
+
+        function crear($modulo, $nombre, $titulo, $descripcion, $creador = "0") {
+            $fechas = new Fechas();
+            $db = new MySQL();
+            $sql = "SELECT * FROM `aplicacion_modulos` WHERE `modulo` =" . $modulo . ";";
+            $consulta = $db->sql_query($sql);
+            $conteo = $db->sql_numrows($consulta);
+            if ($conteo == 0) {
+                $sql = "INSERT INTO `aplicacion_modulos` SET ";
+                $sql.="`modulo` = '" . $modulo . "', ";
+                $sql.="`nombre` = '" . $nombre . "', ";
+                $sql.="`titulo` = '" . $titulo . "', ";
+                $sql.="`descripcion` = '" . $descripcion . "', ";
+                $sql.="`fecha` = '" . $fechas->hoy() . "', ";
+                $sql.="`hora` = '" . $fechas->ahora() . "', ";
+                $sql.="`creador` = '" . $creador . "';";
+                $consulta = $db->sql_query($sql);
+            } else {
+                
+            }
+            $db->sql_close();
+            return($sql);
+        }
+
+    }
+
+}
+?>

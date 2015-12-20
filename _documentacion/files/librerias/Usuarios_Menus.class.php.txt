@@ -1,0 +1,23 @@
+<?php 
+$root = (!isset($root)) ? "../../../" : $root;
+require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
+require_once($root."modulos/aplicacion/librerias/Aplicacion_Menus.class.php");
+/**
+ * @package Insside
+ * @subpackage Usuarios
+ * @author Jose Alexis Correa Valencia <jalexiscv@gmail.com>
+ * @copyright (c) 2015 www.insside.com
+ */
+
+/**
+ * Description of Usuarios_Menus
+ *
+ * @author Alexis
+ */
+
+if(!class_exists('Usuarios_Menus')) {
+class Usuarios_Menus extends Aplicacion_Menus{
+  //put your code here
+}
+}
+?>

@@ -1,37 +1,86 @@
 <?php
-$root = (!isset($root)) ? "../../../" : $root;
-if(!class_exists('Aplicacion_Menus')) {require_once($root."modulos/aplicacion/librerias/Aplicacion_Menus.class.php");}
-/*
- * Copyright (c) 2015, Alexis
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * * Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
- * * Redistributions in binary form must reproduce the above copyright notice,
- *   this list of conditions and the following disclaimer in the documentation
- *   and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- */
 
+$root = (!isset($root)) ? "../../../" : $root;
+require_once($root . "modulos/usuarios/librerias/Configuracion.cnf.php");
+/**
+ * @package Insside
+ * @subpackage Usuarios
+ * @author Jose Alexis Correa Valencia <jalexiscv@gmail.com>
+ * @copyright (c) 2015 www.insside.com
+ */
 /**
  * Description of Usuarios_Menus
  *
  * @author Alexis
  */
-class Usuarios_Menus extends Aplicacion_Menus{
-  //put your code here
+if (!class_exists('Usuarios_Menus')) {
+
+    class Usuarios_Menus {
+
+        var $sesion;
+        var $usuarios;
+
+        function Usuarios_Menus() {
+            $this->sesion = new Sesion();
+            $this->usuarios = new Usuarios();
+        }
+
+        function opciones($herencia) {
+            $db = new MySQL();
+            $sql = ("SELECT * FROM `aplicacion_modulos_componentes` WHERE( `herencia`='" . $herencia . "' AND `estado` = 'ACTIVO' ) ORDER BY `peso` ASC");
+            //echo($sql);
+            $consulta = $db->sql_query($sql);
+            $filas = NULL;
+            $conteo = 0;
+            while ($fila = $db->sql_fetchrow($consulta)) {
+                $filas[$conteo] = $fila;
+                $conteo++;
+            }$db->sql_close();
+            return($filas);
+        }
+
+        function menu($herencia, $usuario) {
+            $componentes = new Aplicacion_Modulos_Componentes();
+            $funciones = new Funciones();
+            $identidad = "menu" . time();
+            $vc = $this->opciones($herencia);
+            $html = "<div id=\"$identidad\" class=\"menu\">";
+            for ($c = 0; $c < count($vc); $c++) {
+                if ($this->usuarios->permiso($vc[$c]['permiso'], $usuario) || empty($vc[$c]['permiso'])) {
+                    $html.="<h2>" . (urldecode($vc[$c]['titulo'])) . "</h2>";
+                    $vo = $this->opciones($vc[$c]['componente']);
+                    $html.=(" <div class=\"opciones\">");
+                    for ($o = 0; $o < count($vo); $o++) {
+                        if ($this->usuarios->permiso($vo[$o]['permiso'], $usuario) || empty($vo[$o]['permiso'])) {
+                            $html.="<a href = \"#\" onclick=\"MUI.f" . ($vo[$o]['funcion']) . "();\">";
+                            $html.=(" <div class=\"opcion\">");
+                            $html.="<div class=\"icono\"><div id=\"" . ($vc[$c]['icono']) . "\"></div></div>";
+                            $html.=(" <div class=\"etiqueta\">");
+                            $html.="<div class=\"titulo\">" . urldecode($vo[$o]['titulo']) . "</div>";
+                            $html.="<div class=\"descripcion\">" . urldecode($vo[$o]['descripcion']) . "</div>";
+                            $html.="</div>";
+                            $html.="</div>";
+                            $html.="</a>";
+                        }
+                    }
+                    $html.="</div>";
+                    if (isset($vc[$c + 1])) {
+                        $html.="\n";
+                    } else {
+                        $html.="\n";
+                    }
+                }
+            }
+            $html.="<script>";
+            $html.="var a = new iAccordion($('$identidad'), '#$identidad h2', '#$identidad .opciones',{"
+                    . "container:\$('componentes'),"
+                    . "width:\$('componentes').width"
+                    . "});";
+            $html.="</script>";
+            return($html);
+        }
+
+    }
+
 }
+?>
