@@ -26,7 +26,7 @@ Roles: Todos los usuarios están sujetos a las reglas de permisos a la hora de t
 agrupa una serie de permisos que en esencia definen las funciones de un usuario en el sistema, esta política es utilizada 
 generalmente para poder rotar la funciones informáticas y reales de un empleado de la empresa u entidad en la medida que 
 este desempeña diferentes cargos reales en la misma, o incluso poder asignar sus funciones a quien lo remplaza al momento 
-de la rotación de los cargos, periodo vacaciones y similares.
+de la rotación de los cargos, periodo vacaciones y similares. 
 
 Usuario: En términos generales, un usuario es un conjunto de permisos asignados mediante roles a los cuales tiene acceso una entidad (Es decir, un usuario puede ser tanto una persona como una máquina, un programa, etc.) cuyas funciones en el sistema están determinadas por el rol o roles que desempeña, su identidad es única y generalmente está asociada al perfil de un empleado. Una vez este usuario a interactuado con el sistema realizando modificaciones y similares no podrá ser eliminado ya que afectaría la integridad referencial de la información. Pero sus privilegios podrán ser reasignados libremente como y cuando se requiera sin consecuencias colaterales, mas halla de la finalización de sus funciones.
 Instrucciones de Utilización
